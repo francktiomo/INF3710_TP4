@@ -1,52 +1,33 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { DialogData } from "../../../../common/communication/dialog-data";
-import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
+import { DialogData } from "../../../../../common/communication/dialog-data";
 import { MatDatepicker } from "@angular/material/datepicker";
 import * as moment from "moment";
-import { CommunicationService } from "../services/communication.service";
-import { Variete } from "../../../../common/tables/Variete";
-import { Semencier } from "../../../../common/tables/Semencier";
-import { AdaptationTypeSolVariete } from '../../../../common/tables/AdaptationTypeSolVariete';
-import { PendingQueryComponent } from "./pending-query.component";
-import { Production } from '../../../../common/tables/Production';
+import { CommunicationService } from "../../services/communication.service";
+import { Variete } from "../../../../../common/tables/Variete";
+import { Semencier } from "../../../../../common/tables/Semencier";
+import { AdaptationTypeSolVariete } from '../../../../../common/tables/AdaptationTypeSolVariete';
+import { PendingQueryComponent } from "../pending-query/pending-query.component";
+import { Production } from '../../../../../common/tables/Production';
 
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'DD MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'DD MMMM YYYY',
-  },
-};
+
 
 @Component ({
-  selector: 'ModifyVarieteComponent',
-  templateUrl: './modify-variete.component.html',
-  styleUrls: ['./modify-variete.component.css', './add-variete.component.css', '../jardins/dialog.component.css'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    },
-
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  ],
+  selector: 'ModifyMealPlanComponent',
+  templateUrl: './modify-mealplan.component.html',
+  styleUrls: ['./modify-mealplan.component.css', '.././add-plan/add-mealplan.component.css'],
 })
 
-export class ModifyVarieteComponent implements OnInit {
+export class ModifyMealPlanComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
   fifthFormGroup: FormGroup;
   sixthFormGroup: FormGroup;
+
+
   date = new FormControl(moment());
   nomVariete: string = '';
   miseEnPlaceStart: Date;
@@ -65,6 +46,8 @@ export class ModifyVarieteComponent implements OnInit {
   semenciers: Semencier[];
   adaptations: AdaptationTypeSolVariete[];
   productions: Production[];
+
+
   placeholderMP: boolean = false;
   placeholderPR: boolean = false;
   placeholderMEP: boolean = false;
@@ -76,7 +59,7 @@ export class ModifyVarieteComponent implements OnInit {
   private deepSaveAdaptationTypeSol: string = '';
   private deepSaveNomSemencier: string = '';
 
-  constructor(public dialog: MatDialog, private _formBuilder: FormBuilder, public dialogRef: MatDialogRef<ModifyVarieteComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private readonly communicationService: CommunicationService) {}
+  constructor(public dialog: MatDialog, private _formBuilder: FormBuilder, public dialogRef: MatDialogRef<ModifyMealPlanComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private readonly communicationService: CommunicationService) {}
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -84,31 +67,28 @@ export class ModifyVarieteComponent implements OnInit {
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
-      thirdCtrl: ['', Validators.required],
-      fourthCtrl: ['', Validators.required],
-      fifthCtrl: ['', Validators.required],
-      sixthCtrl: ['', Validators.required],
+
     });
     this.thirdFormGroup = this._formBuilder.group({
-      seventhCtrl: ['', Validators.required],
-      eigthCtrl: ['', Validators.required],
-      ninthCtrl: ['', Validators.required],
+      thirdCtrl: ['', Validators.required],
     });
     this.fourthFormGroup = this._formBuilder.group({
-      tenthCtrl: ['', Validators.required],
+      fourthCtrl: ['', Validators.required],
     });
     this.fifthFormGroup = this._formBuilder.group({
-      eleventhCtrl: ['', Validators.required],
-      twelfthCtrl: ['', Validators.required],
+      fifthCtrl: ['', Validators.required],
     });
     this.sixthFormGroup = this._formBuilder.group({
-      thirtheenthCtrl: ['', Validators.required],
+      sixthCtrl: ['', Validators.required],
     });
+    this.sixthFormGroup = this._formBuilder.group({
+      seventhCtrl: ['', Validators.required],
+    });
+    
     this.getAllVarietes();
     this.getAllSemencier();
-    this.getAllProductions();
     this.getAllAdaptationTypeSolVariete();
-    setTimeout(() => {this.loadValues()}, 250);
+    setTimeout(() => { this.loadValues() }, 250);
   }
 
   loadValues(): void {
@@ -122,13 +102,7 @@ export class ModifyVarieteComponent implements OnInit {
         this.plantation = descriptions[0].split('""').join('');
         this.entretien = descriptions[1].split('""').join('');
         this.recolte = descriptions[2].split('""').join('');
-        const periodeMiseEnPlace: string[] = this.data.variete.periodemiseenplace.split(' au ');
-        this.miseEnPlaceStart = this.printDate(periodeMiseEnPlace[0]);
-        this.miseEnPlaceEnd = this.printDate(periodeMiseEnPlace[1]);
-        const periodeRecolte: string[] = this.data.variete.perioderecolte.split(' au ');
-        this.periodeRecolteStart = this.printDate(periodeRecolte[0]);
-        this.periodeRecolteEnd = this.printDate(periodeRecolte[1]);
-        this.anneeMiseEnMarche = new Date(this.data.variete.anneemiseenmarche).getFullYear().toString();
+
         if (!this.date || !this.date.value) return;
         const ctrlValue = this.date.value;
         ctrlValue.day(new Date('1').toString());
@@ -157,10 +131,6 @@ export class ModifyVarieteComponent implements OnInit {
     this.placeholderMEP = false;
   }
 
-  printDate(periodeMiseEnPlace: string): Date {
-    const startPeriodeMiseEnPlace: string[] = periodeMiseEnPlace.split('/');
-    return new Date(Number(startPeriodeMiseEnPlace[2]), Number(startPeriodeMiseEnPlace[1]), Number(startPeriodeMiseEnPlace[0]));
-  }
 
   getSetOfNomsSemenciers(): Set<string> | undefined {
     if (!this.productions) return;
@@ -323,9 +293,4 @@ export class ModifyVarieteComponent implements OnInit {
     });
   }
 
-  private getAllProductions(): void {
-    this.communicationService.getAllProduction().subscribe((productions: Production[]) => {
-      this.productions = productions ? productions : [];
-    });
-  }
 }

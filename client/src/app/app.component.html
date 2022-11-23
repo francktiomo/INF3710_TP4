@@ -1,20 +1,19 @@
 <div>
   <nav class="navbar navbar-dark bg-dark main-nav">
-    <a class="navbar-brand title" href="/" matTooltip="Retournez à l'accueil">POSTGRESQL INTEGRATION</a>
+    <a class="navbar-brand title" href="/" matTooltip="Retournez à l'accueil">PLAN REPAS TOUTFRAIS</a>
     <div class="navbar-expand mr-auto">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" routerLink="/jardins">Liste des jardins</a>
-        <a class="nav-item nav-link active" routerLink="/plantes">Rechercher une plante</a>
-        <a class="nav-item nav-link active" routerLink="/varietes">Modifier une variété</a>
+        <a class="nav-item nav-link active" routerLink="/mealplans">Liste des plans repas</a>
+        <a class="nav-item nav-link active" routerLink="/edit-mealplans">Modifier les plans</a>
       </div>
     </div>
   </nav>
 
   <div class="home" *ngIf="route == ''">
     <p>
-      Bienvenue aux jardins communautaires du Plateau Mont-Royal
+      Les plans repas de la compagnie ToutFrais
     </p>
-    <button mat-raised-button color="primary" class="btn" routerLink="/jardins">Parcourir nos jardins...<mat-icon>arrow_right</mat-icon></button>
+    <button mat-raised-button color="primary" class="btn" routerLink="/jardins">Parcourir nos plans repas<mat-icon>arrow_right</mat-icon></button>
   </div>
 
   <router-outlet></router-outlet>

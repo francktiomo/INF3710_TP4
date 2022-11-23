@@ -1,5 +1,5 @@
 .title {
-  color: rgba(154, 117, 240, 1);
+  color: rgb(238, 115, 0);
   font-family: 'Roboto', sans-serif;
   margin-left: 10px;
   font-weight: bold;
@@ -20,9 +20,12 @@
   transform: translateY(-50%);
   font-size: 60px;
   text-align: center;
-  background: rgba(154, 117, 240, 0.4);
-  padding-top: 2%;
-  padding-bottom: 2%;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 5%;
+}
+
+p{
+  color:rgb(255, 255, 255);
 }
 
 .btn {
@@ -30,6 +33,7 @@
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
   padding: 10px;
+  background:brown;
 }
 
 .main-nav {

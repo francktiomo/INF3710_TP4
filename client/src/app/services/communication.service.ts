@@ -11,6 +11,7 @@ import { Variete } from '../../../../common/tables/Variete';
 import { Semencier } from '../../../../common/tables/Semencier';
 import { AdaptationTypeSolVariete } from '../../../../common/tables/AdaptationTypeSolVariete';
 import { Production } from '../../../../common/tables/Production';
+import { MealPlan } from "../../../../common/tables/MealPlan";
 
 @Injectable()
 export class CommunicationService {
@@ -153,9 +154,9 @@ export class CommunicationService {
 
 
   // ======= VARIETE =======
-  public insertVariete(variete: Variete): Observable<number> {
+  public insertMealPlan(mealPlan: MealPlan): Observable<number> {
     return this.http
-      .post<number>(this.BASE_URL + "/varietes", variete)
+      .post<number>(this.BASE_URL + "/varietes", mealPlan)
       .pipe(catchError(this.handleError<number>("insertVariete")));
   }
 

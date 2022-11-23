@@ -7,27 +7,27 @@
 <div *ngIf="!data.update && !data.delete">
   <div *ngIf="!data.pending && !data.success">
     <p class="no-content" *ngIf="!data.prodInsertError && !data.adaptInsertError">
-      Erreur dans l'insertion d'une nouvelle variété de plante. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+      Erreur dans l'insertion d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
       Il est possible que cette variété soit déjà présente au sein de la BD.
     </p>
     <div *ngIf="data.prodInsertError && !data.adaptInsertError">
       <p class="content">
-        Insertion d'une nouvelle variété réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
+        Insertion d'un nouveau plan repas ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
       </p>
       <p class="content">
-        Insertion d'une nouvelle adaptation réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
+        Insertion d'un nouveau plan repas ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
       </p>
       <p class="no-content">
-        Erreur dans l'insertion d'une nouvelle production. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+        Erreur dans l'insertion d'un nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
         Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
       </p>
     </div>
     <div *ngIf="!data.prodInsertError && data.adaptInsertError">
       <p class="content">
-        Insertion d'une nouvelle adaptation réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
+        Insertion d'un nouveau plan repas réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
       </p>
       <p class="no-content">
-        Erreur dans l'insertion d'une nouvelle adaptation. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+        Erreur dans l'insertion d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
         Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
       </p>
     </div>
@@ -41,31 +41,21 @@
 <div *ngIf="data.update && !data.delete">
   <div *ngIf="!data.pending && !data.success">
     <p class="no-content" *ngIf="!data.prodModError && !data.adaptModError">
-      Erreur dans la modification d'une nouvelle variété de plante. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+      Erreur dans la modification du plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
       Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
     </p>
     <div *ngIf="data.prodModError && !data.adaptModError">
       <p class="content">
-        Modification d'une nouvelle variété réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
+        Modification d'un nouveau plan repas reussie! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
       </p>
       <p class="content">
-        Modification d'une nouvelle adaptation réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
+        Modification d'un nouveau plan repas reussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
       </p>
       <p class="no-content">
-        Erreur dans la modification d'une nouvelle production. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+        Erreur dans la modification d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
         Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
       </p>
     </div>
-    <div *ngIf="!data.prodModError && data.adaptModError">
-      <p class="content">
-        Modification d'une nouvelle adaptation réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
-      </p>
-      <p class="no-content">
-        Erreur dans la modification d'une nouvelle adaptation. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
-        Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
-      </p>
-    </div>
-  </div>
   <div *ngIf="!data.pending && data.success">
     <p class="content">
       Modifications réussies ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
@@ -75,7 +65,7 @@
 <div *ngIf="!data.update && data.delete">
   <div *ngIf="!data.pending && !data.success">
     <p class="no-content">
-      Erreur dans la suppression d'une nouvelle variété de plante. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+      Erreur dans la suppression d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
       Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
     </p>
   </div>

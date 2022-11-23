@@ -2,15 +2,13 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { AppComponent } from "../app.component";
-import { JardinsComponent } from '../jardins/jardins.component';
-import { PlantesComponent } from '../plantes/plantes.component';
-import { VarietesComponent } from '../varietes/varietes.component';
+import { MealPlanComponent } from '../mealplan/mealplan.component';
+import { EditMealPlanComponent} from '../edit-plans-module/edit-mealplan.component';
 
 const routes: Routes = [
   { path: "app", component: AppComponent },
-  { path: "jardins", component: JardinsComponent },
-  { path: "plantes", component: PlantesComponent },
-  { path: "varietes", component: VarietesComponent },
+  { path: "mealplans", component: MealPlanComponent },
+  { path: "edit-mealplans", component: EditMealPlanComponent },
 ];
 
 @NgModule({

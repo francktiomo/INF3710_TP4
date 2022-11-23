@@ -1,0 +1,182 @@
+<h2 mat-dialog-title align="center">Modifier un plan repas</h2>
+<mat-divider></mat-divider>
+<br />
+
+<div mat-dialog-content>
+  <mat-vertical-stepper [linear]="false" #stepper>
+
+
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Entrez un numero de plan</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Numero de plan</mat-label>
+          <input [(ngModel)]="nomVariete" maxlength='150' matInput  formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Entrez une categorie</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Categorie</mat-label>
+          <mat-select [(value)]="nomSemencier" formControlName="eleventhCtrl">
+            <mat-option *ngFor="let semencier of this.getSetOfNomsSemenciers()" [value]="semencier">
+              {{ semencier }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br/>
+        <mat-slide-toggle [(ngModel)]="bio" formControlName="twelfthCtrl">Production biologique</mat-slide-toggle>
+        <div>
+          <button mat-button matStepperPrevious>Retour</button>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Frequence</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Frequence</mat-label>
+          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="fourthFormGroup">
+      <form [formGroup]="fourthFormGroup">
+        <ng-template matStepLabel>Nombre de personnes</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre de personnes</mat-label>
+          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="fifthFormGroup">
+      <form [formGroup]="fifthFormGroup">
+        <ng-template matStepLabel>Nombre de calories</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre de calories</mat-label>
+          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="sixthFormGroup">
+      <form [formGroup]="sixthFormGroup">
+        <ng-template matStepLabel>Prix</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Prix</mat-label>
+          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Entrez le numero du fournisseur</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Numero du fournisseur</mat-label>
+          <mat-select [(value)]="nomSemencier" formControlName="eleventhCtrl">
+            <mat-option *ngFor="let semencier of this.getSetOfNomsSemenciers()" [value]="semencier">
+              {{ semencier }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br/>
+        <mat-slide-toggle [(ngModel)]="bio" formControlName="twelfthCtrl">Production biologique</mat-slide-toggle>
+        <div>
+          <button mat-button matStepperPrevious>Retour</button>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step>
+      <ng-template matStepLabel>Révision de l'ajout</ng-template>
+      <mat-card class="example-card">
+        <mat-card-subtitle *ngIf="nomVariete">Variété : {{ nomVariete }}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="!nomVariete" ngClass="to-be-defined">Nom de variété : à définir</mat-card-subtitle>
+        <mat-card-content>
+          <ul>
+            <li *ngIf="anneeMiseEnMarche">
+              Numero du plan : {{ anneeMiseEnMarche }}
+            </li>
+              <li *ngIf="!anneeMiseEnMarche" ngClass="to-be-defined">
+                Numero du plan : à définir
+              </li>
+            <li *ngIf="miseEnPlaceStart && miseEnPlaceEnd">
+              Categorie : {{ this.convertToDate(miseEnPlaceStart) }} au {{ this.convertToDate(miseEnPlaceEnd) }}
+            </li>
+              <li *ngIf="!miseEnPlaceStart || !miseEnPlaceEnd" ngClass="to-be-defined">
+                Categorie : à définir
+              </li>
+            <li *ngIf="periodeRecolteStart && periodeRecolteEnd">
+              Frequence : {{ this.convertToDate(periodeRecolteStart) }} au {{ this.convertToDate(periodeRecolteEnd) }}
+            </li>
+              <li *ngIf="!periodeRecolteStart || !periodeRecolteEnd" ngClass="to-be-defined">
+                Frequence : à définir
+              </li>
+            <li *ngIf="plantation">
+              Nombre de personnes :<br/>{{ plantation }}
+            </li>
+              <li *ngIf="!plantation" ngClass="to-be-defined">
+                Nombre de personnes : à définir
+              </li>
+            <li *ngIf="entretien">
+              Nombre de calories :<br/>{{ entretien }}
+            </li>
+              <li *ngIf="!entretien" ngClass="to-be-defined">
+                Nombre de calories : à définir
+              </li>
+            <li *ngIf="recolte">
+              Prix :<br/>{{ recolte }}
+            </li>
+              <li *ngIf="!recolte" ngClass="to-be-defined">
+                Prix : à définir
+              </li>
+            <li *ngIf="commentaire">
+              Numero du Fournisseur :<br/>{{ commentaire }}
+            </li>
+              <li *ngIf="!commentaire" ngClass="to-be-defined">
+                Numero du Fournisseur : à définir
+              </li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+      <div>
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button (click)="stepper.reset()" (click)="this.resetAnneeMiseMarche()">Réinitialiser</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+<mat-divider></mat-divider>
+<div style="display: flex; justify-content: space-between; align-items: center; align-content: space-between; flex-direction: row;" mat-dialog-actions>
+  
+  <div>
+    <button mat-button mat-dialog-close color="primary" *ngIf="nomVariete && anneeMiseEnMarche && miseEnPlaceStart && miseEnPlaceEnd && periodeRecolteStart && periodeRecolteEnd && commentaire && plantation && entretien && recolte" (click)="this.addVariete()">Ajouter ! <mat-icon>local_florist</mat-icon></button>
+    <button mat-button mat-dialog-close color="primary">Annuler <mat-icon>clear</mat-icon></button>
+  </div>
+</div>

@@ -10,7 +10,7 @@ export class DatabaseService {
   public connectionConfig: pg.ConnectionConfig = {
     user: "postgres",
     database: "TP4",
-    password: "root",
+    password: "ewald",
     port: 5432,        // Warning: can also be 5433 for some users
     host: "127.0.0.1",
     keepAlive: true
@@ -19,15 +19,14 @@ export class DatabaseService {
   public pool: pg.Pool = new pg.Pool(this.connectionConfig);
 
 
-  // ======= PLANS =======
-  async getAllPlans(): Promise<pg.QueryResult> {
+  // ======= JARDINS =======
+  async getAllJardins(): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
-    const queryText: string = `SELECT * FROM public.Planrepas;`;
+    const queryText: string = `SELECT * FROM jardinCommMR.Jardin;`;
     const res = await client.query(queryText);
     client.release();
     return res;
   }
-
 
   async getJardin(id: number): Promise<pg.QueryResult> {
     const client = await this.pool.connect();

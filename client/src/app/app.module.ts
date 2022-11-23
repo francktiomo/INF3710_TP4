@@ -7,27 +7,23 @@ import { AppRoutingModule } from "./modules/app-routing.module";
 import { AppComponent } from "./app.component";
 import { CommunicationService } from "./services/communication.service";
 import { AppMaterialModule } from './modules/material.module';
-import { JardinsComponent } from './jardins/jardins.component';
-import { VarietesComponent } from './varietes/varietes.component';
-import { PlantesComponent } from './plantes/plantes.component';
+import { MealPlanComponent } from './mealplan/mealplan.component';
+import { EditMealPlanComponent } from './edit-plans-module/edit-mealplan.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogComponent } from "./jardins/dialog.component";
-import { AddVarieteComponent } from "./varietes/add-variete.component";
-import { PendingQueryComponent } from "./varietes/pending-query.component";
-import { ModifyVarieteComponent } from "./varietes/modify-variete.component";
-import { DeleteVarieteComponent } from "./varietes/delete-variete.component";
+import { AddMealPlanComponent } from "./edit-plans-module/add-plan/add-mealplan.component";
+import { PendingQueryComponent } from "./edit-plans-module/pending-query/pending-query.component";
+import { ModifyMealPlanComponent } from "./edit-plans-module/modify-plan/modify-mealplan.component";
+import { DeleteMealPlanComponent } from "./edit-plans-module/delete-plan/delete-mealplan.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    JardinsComponent,
-    DialogComponent,
-    VarietesComponent,
-    PlantesComponent,
-    AddVarieteComponent,
+    MealPlanComponent,
+    EditMealPlanComponent,
+    AddMealPlanComponent,
     PendingQueryComponent,
-    ModifyVarieteComponent,
-    DeleteVarieteComponent
+    ModifyMealPlanComponent,
+    DeleteMealPlanComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +36,7 @@ import { DeleteVarieteComponent } from "./varietes/delete-variete.component";
     AppMaterialModule
   ],
   providers: [CommunicationService],
-  entryComponents: [DialogComponent, AddVarieteComponent, PendingQueryComponent, ModifyVarieteComponent, DeleteVarieteComponent],
+  entryComponents: [AddMealPlanComponent, PendingQueryComponent, ModifyMealPlanComponent, DeleteMealPlanComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

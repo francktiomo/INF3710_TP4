@@ -1,3 +1,13 @@
+.add-btn {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  text-align: center;
+}
+
+.btn-container {
+  text-align: center;
+}
+
 table {
   width: 100%;
   text-align: center;
@@ -18,11 +28,11 @@ table {
 }
 
 .circle-outline {
-  background: #f2edfd;
+  background: #ddd4bb;
 }
 
 .circle-inline {
-  color: #9A75F0;
+  color: #e40d0d;
 }
 
 h1 {
@@ -31,7 +41,7 @@ h1 {
   padding-top: 2%;
   padding-bottom: 1%;
   text-align: center;
-  color: #9a75f0;
+  color: brown;
   font-weight: bold;
   text-shadow: 1px 1px #000;
 }
@@ -46,3 +56,5 @@ th {
   vertical-align: middle !important;
   font-family: 'Roboto', sans-serif;
 }
+
+

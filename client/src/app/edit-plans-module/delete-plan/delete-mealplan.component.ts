@@ -1,20 +1,20 @@
 import { Component, Inject } from "@angular/core";
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog"
-import { DialogData } from "../../../../common/communication/dialog-data";
-import { PendingQueryComponent } from "./pending-query.component";
-import { CommunicationService } from "../services/communication.service";
+import { DialogData } from "../../../../../common/communication/dialog-data";
+import { PendingQueryComponent } from "../pending-query/pending-query.component";
+import { CommunicationService } from "../../services/communication.service";
 
 @Component ({
-  selector: 'DeleteVarieteComponent',
-  templateUrl: './delete-variete.component.html',
-  styleUrls: ['./delete-variete.component.css', '../jardins/dialog.component.css'],
+  selector: 'DeleteMealPlanComponent',
+  templateUrl: './delete-mealplan.component.html',
+  styleUrls: ['./delete-mealplan.component.css'],
 })
 
-export class DeleteVarieteComponent {
+export class DeleteMealPlanComponent {
   pending: boolean = true;
   success: boolean = false;
 
-  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<DeleteVarieteComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private readonly communicationService: CommunicationService) {}
+  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<DeleteMealPlanComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private readonly communicationService: CommunicationService) {}
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();

@@ -19,7 +19,5 @@ export class AppComponent implements OnInit {
             }
           });
     }
-
-    public readonly title: string = "POSTGRESQL INTEGRATION";
     public ngOnInit(): void { }
 }

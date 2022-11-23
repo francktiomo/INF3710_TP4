@@ -1,0 +1,180 @@
+<h2 mat-dialog-title align="center">Ajouter un plan repas</h2>
+<mat-divider></mat-divider>
+<br />
+
+<div mat-dialog-content>
+  <mat-vertical-stepper [linear]="false" #stepper>
+
+
+    <mat-step [stepControl]="formGroups[0]">
+      <form [formGroup]="formGroups[0]">
+        <ng-template matStepLabel>Entrez un numero de plan</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Numero de plan</mat-label>
+          <input [(ngModel)]="mealPlan.planNumber" maxlength='150' matInput placeholder="Ex. 34" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="formGroups[1]">
+      <form [formGroup]="formGroups[1]">
+        <ng-template matStepLabel>Entrez une categorie</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Categorie</mat-label>
+          <mat-select [(value)]="mealPlan.category" formControlName="secondCtrl">
+            <mat-option *ngFor="let semencier of this.getSetOfNomsSuppliers()" [value]="semencier">
+              {{ semencier }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br/>
+        <div>
+          <button mat-button matStepperPrevious>Retour</button>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step [stepControl]="formGroups[2]">
+      <form [formGroup]="formGroups[2]">
+        <ng-template matStepLabel>Frequence</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Frequence</mat-label>
+          <input [(ngModel)]="mealPlan.frequency" maxlength='150' matInput placeholder="Ex. 34" formControlName="thirdCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="formGroups[3]">
+      <form [formGroup]="formGroups[3]">
+        <ng-template matStepLabel>Nombre de personnes</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre de personnes</mat-label>
+          <input [(ngModel)]="mealPlan.numberOfPeople" maxlength='150' matInput placeholder="Ex. 34" formControlName="fourthCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="formGroups[4]">
+      <form [formGroup]="formGroups[4]">
+        <ng-template matStepLabel>Nombre de calories</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre de calories</mat-label>
+          <input [(ngModel)]="mealPlan.numberOfCalories" maxlength='150' matInput placeholder="Ex. 34" formControlName="fifthCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="formGroups[5]">
+      <form [formGroup]="formGroups[5]">
+        <ng-template matStepLabel>Prix</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Prix</mat-label>
+          <input [(ngModel)]="mealPlan.price" maxlength='150' matInput placeholder="Ex. 34" formControlName="sixthCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="formGroups[6]">
+      <form [formGroup]="formGroups[6]">
+        <ng-template matStepLabel>Entrez le numero du fournisseur</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Numero du fournisseur</mat-label>
+          <mat-select [(value)]="mealPlan.supplierNumber" formControlName="seventhCtrl">
+            <mat-option *ngFor="let semencier of this.getSetOfNomsSuppliers()" [value]="semencier">
+              {{ semencier }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br/>
+        <div>
+          <button mat-button matStepperPrevious>Retour</button>
+          <button mat-button matStepperNext>Prochaine étape</button>
+        </div>
+      </form>
+    </mat-step>
+
+
+    <mat-step>
+      <ng-template matStepLabel>Révision de l'ajout</ng-template>
+      <mat-card class="example-card">
+        <mat-card-subtitle *ngIf="mealPlan">Plan Repas #{{ mealPlan.planNumber }}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="!mealPlan" ngClass="to-be-defined">Plan Repas: à définir</mat-card-subtitle>
+        <mat-card-content>
+          <ul>
+            <li *ngIf="mealPlan.planNumber">
+              Numero du plan : {{ mealPlan.planNumber }}
+            </li>
+              <li *ngIf="!mealPlan.planNumber" ngClass="to-be-defined">
+                Numero du plan : à définir
+              </li>
+            <li *ngIf="mealPlan.category ">
+              Categorie : {{ mealPlan.category }}
+            </li>
+              <li *ngIf="!mealPlan.category" ngClass="to-be-defined">
+                Categorie : à définir
+              </li>
+            <li *ngIf="mealPlan.frequency">
+              Frequence : {{ mealPlan.frequency }}
+            </li>
+              <li *ngIf="!mealPlan.frequency" ngClass="to-be-defined">
+                Frequence : à définir
+              </li>
+            <li *ngIf="mealPlan.numberOfPeople">
+              Nombre de personnes :<br/>{{ mealPlan.numberOfPeople }}
+            </li>
+              <li *ngIf="!mealPlan.numberOfPeople" ngClass="to-be-defined">
+                Nombre de personnes : à définir
+              </li>
+            <li *ngIf="mealPlan.numberOfCalories">
+              Nombre de calories :<br/>{{ mealPlan.numberOfCalories }}
+            </li>
+              <li *ngIf="!mealPlan.numberOfCalories" ngClass="to-be-defined">
+                Nombre de calories : à définir
+              </li>
+            <li *ngIf="mealPlan.price">
+              Prix :<br/>{{ mealPlan.price }}
+            </li>
+              <li *ngIf="!mealPlan.price" ngClass="to-be-defined">
+                Prix : à définir
+              </li>
+            <li *ngIf="mealPlan.supplierNumber">
+              Numero du Fournisseur :<br/>{{ mealPlan.supplierNumber }}
+            </li>
+              <li *ngIf="!mealPlan.supplierNumber" ngClass="to-be-defined">
+                Numero du Fournisseur : à définir
+              </li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+      <div>
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button (click)="stepper.reset()">Réinitialiser</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+<mat-divider></mat-divider>
+<div style="display: flex; justify-content: space-between; align-items: center; align-content: space-between; flex-direction: row;" mat-dialog-actions>
+  
+  <div>
+    <button mat-button mat-dialog-close color="primary" *ngIf="this.allFieldAreCompleted()" (click)="this.addVariete()">Ajouter ! <mat-icon>local_florist</mat-icon></button>
+    <button mat-button mat-dialog-close color="primary">Annuler <mat-icon>clear</mat-icon></button>
+  </div>
+</div>
