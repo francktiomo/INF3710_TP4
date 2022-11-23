@@ -63,10 +63,10 @@ export class MealPlanComponent implements OnInit {
 
 
   private getAllMealPlans(): void {
-    this.mealPlans = mockMealPlans; // Replace this by communication service method when implemented
+    this.mealPlans = mockMealPlans; // comment line 66 and uncomment 68 to 70
 
-    // this.communicationService.getAllJardins().subscribe((jardins: Jardin[]) => {
-    //   this.plansRepas = jardins ? jardins : [];
+    // this.communicationService.getAllMealPlans().subscribe((mealPlans: MealPlan[]) => {
+    //   this.mealPlans = mealPlans ? mealPlans : [];
     // });
 
 

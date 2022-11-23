@@ -1,17 +1,16 @@
-import { Jardin } from "../tables/Jardin";
-import { Parcelle } from "../tables/Parcelle";
-import { VarieteContenuDansUnRang } from '../tables/VarieteContenuDansUnRang';
-import { Variete } from "../tables/Variete";
+
+import { MealPlan } from "../tables/MealPlan";
 
 export interface DialogData {
-  jardin: Jardin;
-  parcelles: Parcelle[];
-  varietesInRangs: VarieteContenuDansUnRang[];
-  variete: Variete;
+  mealPlan: MealPlan;
   pending: boolean;
   success: boolean;
+
   update: boolean;
   delete: boolean;
-  prodInsertError: boolean;
-  adaptInsertError: boolean;
+  add: boolean;
+
+  mealPlanNumberAlreadyExist:boolean;
+  // prodInsertError: boolean;
+  // adaptInsertError: boolean;
 }

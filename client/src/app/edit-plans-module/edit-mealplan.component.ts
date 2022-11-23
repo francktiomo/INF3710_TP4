@@ -65,10 +65,6 @@ export class EditMealPlanComponent implements OnInit {
   }
 
 
-  renderRows(): void {
-    this.table.renderRows();
-  }
-
   openModifyDialog(mealPlan: MealPlan) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
@@ -106,8 +102,8 @@ export class EditMealPlanComponent implements OnInit {
   private getAllMealPlans(): void {
     this.mealPlans = mockMealPlans; // replace by communication service get all meal plans
 
-    // this.communicationService.getAllVarietes().subscribe((varietes: Variete[]) => {
-    //   this.varietes = varietes ? varietes : [];
+    // this.communicationService.getAllMealPlans().subscribe((mealPlans: MealPlan[]) => {
+    //   this.mealPlans = mealPlans ? mealPlans : [];
     // });
   }
 }

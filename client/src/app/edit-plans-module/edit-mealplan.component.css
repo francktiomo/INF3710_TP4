@@ -6,6 +6,7 @@
 
 .btn-container {
   text-align: center;
+  background-color: transparent;
 }
 
 table {
@@ -57,4 +58,7 @@ th {
   font-family: 'Roboto', sans-serif;
 }
 
+#background{
+  background-color: transparent;
+}
 

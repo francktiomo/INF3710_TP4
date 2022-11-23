@@ -32,8 +32,8 @@ export class DeleteMealPlanComponent {
 
   deleteVariete(): void {
     this.openDialog();
-    this.communicationService.deleteVariete(this.data.variete.nom).subscribe((res: number) => {
-      if (res !== -1) {
+    this.communicationService.deleteMealPlan(this.data.mealPlan.planNumber).subscribe((response: number) => {
+      if (response !== -1) {
         this.success = true;
       }
       this.pending = false;

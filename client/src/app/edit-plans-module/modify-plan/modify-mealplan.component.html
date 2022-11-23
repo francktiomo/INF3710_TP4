@@ -1,4 +1,4 @@
-<h2 mat-dialog-title align="center">Modifier un plan repas</h2>
+<h2 mat-dialog-title align="center">Modifier le plan repas</h2>
 <mat-divider></mat-divider>
 <br />
 
@@ -11,7 +11,7 @@
         <ng-template matStepLabel>Entrez un numero de plan</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Numero de plan</mat-label>
-          <input [(ngModel)]="nomVariete" maxlength='150' matInput  formControlName="firstCtrl" required>
+          <input [(ngModel)]="planNumber" maxlength='150' matInput  formControlName="firstCtrl" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Prochaine étape</button>
@@ -24,14 +24,12 @@
         <ng-template matStepLabel>Entrez une categorie</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Categorie</mat-label>
-          <mat-select [(value)]="nomSemencier" formControlName="eleventhCtrl">
-            <mat-option *ngFor="let semencier of this.getSetOfNomsSemenciers()" [value]="semencier">
-              {{ semencier }}
+          <mat-select [(value)]="category" formControlName="secondCtrl">
+            <mat-option *ngFor="let category of this.categories" [value]="category">
+              {{ category }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <br/>
-        <mat-slide-toggle [(ngModel)]="bio" formControlName="twelfthCtrl">Production biologique</mat-slide-toggle>
         <div>
           <button mat-button matStepperPrevious>Retour</button>
           <button mat-button matStepperNext>Prochaine étape</button>
@@ -42,10 +40,10 @@
 
     <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
-        <ng-template matStepLabel>Frequence</ng-template>
+        <ng-template matStepLabel>Entrez une frequence</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Frequence</mat-label>
-          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+          <input [(ngModel)]="frequency" maxlength='150' matInput formControlName="thirdCtrl" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Prochaine étape</button>
@@ -53,12 +51,13 @@
       </form>
     </mat-step>
 
+
     <mat-step [stepControl]="fourthFormGroup">
       <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel>Nombre de personnes</ng-template>
+        <ng-template matStepLabel>Entrez le nombre de personnes</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Nombre de personnes</mat-label>
-          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+          <input [(ngModel)]="numberOfPeople" maxlength='150' matInput formControlName="fourthCtrl" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Prochaine étape</button>
@@ -68,10 +67,10 @@
 
     <mat-step [stepControl]="fifthFormGroup">
       <form [formGroup]="fifthFormGroup">
-        <ng-template matStepLabel>Nombre de calories</ng-template>
+        <ng-template matStepLabel>Entrez le nombre de calories</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Nombre de calories</mat-label>
-          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+          <input [(ngModel)]="numberOfCalories" maxlength='150' matInput formControlName="fifthCtrl" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Prochaine étape</button>
@@ -81,10 +80,10 @@
 
     <mat-step [stepControl]="sixthFormGroup">
       <form [formGroup]="sixthFormGroup">
-        <ng-template matStepLabel>Prix</ng-template>
+        <ng-template matStepLabel>Entrez le prix</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Prix</mat-label>
-          <input [(ngModel)]="nomVariete" maxlength='150' matInput formControlName="firstCtrl" required>
+          <input [(ngModel)]="price" maxlength='150' matInput formControlName="sixthCtrl" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Prochaine étape</button>
@@ -92,19 +91,17 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
+    <mat-step [stepControl]="seventhFormGroup">
+      <form [formGroup]="seventhFormGroup">
         <ng-template matStepLabel>Entrez le numero du fournisseur</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Numero du fournisseur</mat-label>
-          <mat-select [(value)]="nomSemencier" formControlName="eleventhCtrl">
-            <mat-option *ngFor="let semencier of this.getSetOfNomsSemenciers()" [value]="semencier">
-              {{ semencier }}
+          <mat-select [(value)]="supplierNumber" formControlName="seventhFormGroup">
+            <mat-option *ngFor="let supplier of this.suppliers" [value]="supplier.supplierNumber">
+              {{ supplier.supplierNumber }} : {{ supplier.supplierName }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <br/>
-        <mat-slide-toggle [(ngModel)]="bio" formControlName="twelfthCtrl">Production biologique</mat-slide-toggle>
         <div>
           <button mat-button matStepperPrevious>Retour</button>
           <button mat-button matStepperNext>Prochaine étape</button>
@@ -116,50 +113,44 @@
     <mat-step>
       <ng-template matStepLabel>Révision de l'ajout</ng-template>
       <mat-card class="example-card">
-        <mat-card-subtitle *ngIf="nomVariete">Variété : {{ nomVariete }}</mat-card-subtitle>
-          <mat-card-subtitle *ngIf="!nomVariete" ngClass="to-be-defined">Nom de variété : à définir</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="planNumber">Numero du plan :{{ planNumber }}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="!planNumber" ngClass="to-be-defined">Numero du plan : à définir</mat-card-subtitle>
         <mat-card-content>
           <ul>
-            <li *ngIf="anneeMiseEnMarche">
-              Numero du plan : {{ anneeMiseEnMarche }}
+            <li *ngIf="(category!==null)">
+              Categorie : {{ category }}
             </li>
-              <li *ngIf="!anneeMiseEnMarche" ngClass="to-be-defined">
-                Numero du plan : à définir
-              </li>
-            <li *ngIf="miseEnPlaceStart && miseEnPlaceEnd">
-              Categorie : {{ this.convertToDate(miseEnPlaceStart) }} au {{ this.convertToDate(miseEnPlaceEnd) }}
-            </li>
-              <li *ngIf="!miseEnPlaceStart || !miseEnPlaceEnd" ngClass="to-be-defined">
+              <li *ngIf="(category===null)" ngClass="to-be-defined">
                 Categorie : à définir
               </li>
-            <li *ngIf="periodeRecolteStart && periodeRecolteEnd">
-              Frequence : {{ this.convertToDate(periodeRecolteStart) }} au {{ this.convertToDate(periodeRecolteEnd) }}
+            <li *ngIf="(frequency!==null)">
+              Frequence : {{ frequency }}
             </li>
-              <li *ngIf="!periodeRecolteStart || !periodeRecolteEnd" ngClass="to-be-defined">
+              <li *ngIf="(frequency===null)" ngClass="to-be-defined">
                 Frequence : à définir
               </li>
-            <li *ngIf="plantation">
-              Nombre de personnes :<br/>{{ plantation }}
+            <li *ngIf="(numberOfPeople!==null)">
+              Nombre de personnes :{{ numberOfPeople }}
             </li>
-              <li *ngIf="!plantation" ngClass="to-be-defined">
+              <li *ngIf="(numberOfPeople===null)" ngClass="to-be-defined">
                 Nombre de personnes : à définir
               </li>
-            <li *ngIf="entretien">
-              Nombre de calories :<br/>{{ entretien }}
+            <li *ngIf="(numberOfCalories !== null)">
+              Nombre de calories :{{ numberOfCalories }}
             </li>
-              <li *ngIf="!entretien" ngClass="to-be-defined">
+              <li *ngIf="(numberOfCalories === null)" ngClass="to-be-defined">
                 Nombre de calories : à définir
               </li>
-            <li *ngIf="recolte">
-              Prix :<br/>{{ recolte }}
+            <li *ngIf="(price !== null)">
+              Prix : {{ price }}
             </li>
-              <li *ngIf="!recolte" ngClass="to-be-defined">
+              <li *ngIf="(price === null)" ngClass="to-be-defined">
                 Prix : à définir
               </li>
-            <li *ngIf="commentaire">
-              Numero du Fournisseur :<br/>{{ commentaire }}
+            <li *ngIf="(supplierNumber!==null)">
+              Numero du Fournisseur :{{ supplierNumber }}
             </li>
-              <li *ngIf="!commentaire" ngClass="to-be-defined">
+              <li *ngIf="(supplierNumber===null)" ngClass="to-be-defined">
                 Numero du Fournisseur : à définir
               </li>
           </ul>
@@ -167,7 +158,7 @@
       </mat-card>
       <div>
         <button mat-button matStepperPrevious>Retour</button>
-        <button mat-button (click)="stepper.reset()" (click)="this.resetAnneeMiseMarche()">Réinitialiser</button>
+        <button mat-button (click)="stepper.reset()">Réinitialiser</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>
@@ -176,7 +167,7 @@
 <div style="display: flex; justify-content: space-between; align-items: center; align-content: space-between; flex-direction: row;" mat-dialog-actions>
   
   <div>
-    <button mat-button mat-dialog-close color="primary" *ngIf="nomVariete && anneeMiseEnMarche && miseEnPlaceStart && miseEnPlaceEnd && periodeRecolteStart && periodeRecolteEnd && commentaire && plantation && entretien && recolte" (click)="this.addVariete()">Ajouter ! <mat-icon>local_florist</mat-icon></button>
+    <button mat-button mat-dialog-close color="primary" *ngIf="this.allFormFieldAreCompleted()" (click)="this.addMealPlan()">Ajouter !</button>
     <button mat-button mat-dialog-close color="primary">Annuler <mat-icon>clear</mat-icon></button>
   </div>
 </div>
