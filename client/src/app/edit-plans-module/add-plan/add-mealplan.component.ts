@@ -88,14 +88,16 @@ export class AddMealPlanComponent implements OnInit {
   price: number;
   supplierNumber: number;
 
-  suppliers: Supplier[];
-  mealPlans: MealPlan[];
-  categories:string[];
+  suppliers: Supplier[] = [];
+  mealPlans: MealPlan[] = [];
+  categories: string[] = [];
 
   pending: boolean = true;
   success: boolean = false;
-  //have attributes for the errors
+  planNumberAlreadyExist = false;
+  supplierNumberDoesntExist = false;
 
+  mealPlanInsertError: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -127,9 +129,18 @@ export class AddMealPlanComponent implements OnInit {
     this.seventhFormGroup = this._formBuilder.group({
       seventhCtrl: ["", Validators.required],
     });
+    this.setInputsMaxLength();
     this.getAllMealPlans();
     this.getAllSuppliers();
-    this.getAllCategories();
+  }
+
+  setInputsMaxLength(): void {
+    document.querySelectorAll('input[type="number"]').forEach((input: HTMLInputElement) => {
+      input.oninput = () => {
+        if (input.value.length > input.maxLength)
+          input.value = input.value.slice(0, input.maxLength);
+      }
+    });
   }
 
   openPendingDialog() {
@@ -140,34 +151,26 @@ export class AddMealPlanComponent implements OnInit {
     dialogConfig.data = {
       pending: this.pending,
       success: this.success,
+      planNumberAlreadyExist: this.planNumberAlreadyExist,
+      supplierNumberDoesntExist: this.supplierNumberDoesntExist
     };
     this.dialog.closeAll();
     this.dialog.open(PendingQueryComponent, dialogConfig);
   }
 
-  allFormFieldAreCompleted(): boolean{
-    return (this.planNumber!==null)  
-    && (this.category!==null)
-    && (this.frequency!==null)
-    && (this.numberOfPeople!==null)
-    && (this.numberOfCalories !== null)
-    && (this.price !== null)
-    && (this.supplierNumber!==null);
-  }
+  /* allFormFieldAreCompleted(): boolean{
+    return (this.planNumber !== undefined && this.planNumber !== null)  
+    && (this.category !== undefined && this.category !== null)
+    && (this.frequency !== undefined && this.frequency !== null)
+    && (this.numberOfPeople !== undefined && this.numberOfPeople !== null)
+    && (this.numberOfCalories !== undefined && this.numberOfCalories !== null)
+    && (this.price !== undefined && this.price !== null)
+    && (this.supplierNumber !== undefined && this.supplierNumber !== null);
+  } */
 
   addMealPlan(): void {
-    
-    
-    this.data.mealPlanNumberAlreadyExist = false;
-    for (const mealPlan of this.mealPlans) {
-      if (mealPlan.planNumber === this.data.mealPlan.planNumber) {
-        this.data.mealPlanNumberAlreadyExist = true;
-        break;
-      }
-    }
-
     this.openPendingDialog();
-
+    
     this.communicationService
       .insertMealPlan({
         planNumber: this.planNumber,
@@ -175,10 +178,18 @@ export class AddMealPlanComponent implements OnInit {
         frequency: this.frequency,
         numberOfPeople: this.numberOfPeople,
         numberOfCalories: this.numberOfCalories,
-    price: this.price,
-    supplierNumber: this.supplierNumber,
-      } as MealPlan)
-
+        price: this.price,
+        supplierNumber: this.supplierNumber,
+      } as MealPlan).subscribe((result: number | any) => {
+        if (typeof result !== "number") {
+          if (result.detail.includes("numeroplan"))
+            this.planNumberAlreadyExist = true;
+          else if (result.detail.includes("numerofournisseur"))
+            this.supplierNumberDoesntExist = true;
+        } else {
+          this.success = true;
+        }
+      })
       setTimeout(() => {
         this.pending = false;
         this.openPendingDialog();
@@ -187,23 +198,21 @@ export class AddMealPlanComponent implements OnInit {
   }
 
   getAllMealPlans(): void {
-    this.mealPlans = MEALPLANS_FROM_DB ;
-   // this.communicationService.getAllMealPlans().subscribe((mealPlans: MealPlan[]) => {
-    //   this.mealPlans = mealPlans ? mealPlans : [];
-    // });
- }
+    this.communicationService.getAllMealPlans().subscribe((mealPlans: MealPlan[]) => {
+       this.mealPlans = mealPlans ? mealPlans : [];
+       for (const mealPlan of this.mealPlans) {
+        if (!this.categories.includes(mealPlan.category))
+          this.categories.push(mealPlan.category);
+      }
+    });
+  }
 
  getAllSuppliers(): void {
- this.suppliers = SUPPLIERS_FROM_DB; // comment this line and uncomment line 151- 155
-   // this.communicationService
-   //   .getAllSuppliers()
-   //   .subscribe((suppliers: Supplier[]) => {
-   //     this.suppliers = suppliers ? suppliers : [];
-   //   });
+   this.communicationService
+     .getAllSuppliers()
+     .subscribe((suppliers: Supplier[]) => {
+       this.suppliers = suppliers ? suppliers : [];
+     });
  }
-
- getAllCategories(): void {
-   this.categories = MEALPLANS_CATEGORIES;
-   }
 
 }

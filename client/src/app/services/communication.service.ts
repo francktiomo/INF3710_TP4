@@ -7,7 +7,7 @@ import { Supplier } from "../../../../common/tables/Supplier";
 
 @Injectable()
 export class CommunicationService {
-  private readonly BASE_URL: string = "http://localhost:3000/database";
+  private readonly BASE_URL: string = "http://localhost:8000/database";
   public constructor(private readonly http: HttpClient) {}
 
   private _listeners: any = new Subject<any>();
@@ -22,33 +22,33 @@ export class CommunicationService {
 
   getAllMealPlans(): Observable<MealPlan[]> {
     return this.http
-      .get<MealPlan[]>(this.BASE_URL + `/mealPlans`)
+      .get<MealPlan[]>(this.BASE_URL + "/mealPlans")
       .pipe(catchError(this.handleError<MealPlan[]>("getAllMealPlans")));
   }
 
-    public insertMealPlan(mealPlan: MealPlan): Observable<number> {
-      return this.http
-        .post<number>(this.BASE_URL + "/mealPlan", mealPlan)
-        .pipe(catchError(this.handleError<number>("insertMealPlan")));
-    }
+  public insertMealPlan(mealPlan: MealPlan): Observable<number> {
+    return this.http
+      .post<number>(this.BASE_URL + "/mealPlans", mealPlan)
+      .pipe(catchError(this.handleError<number>("insertMealPlan")));
+  }
   
-    public updateMealPlan(mealPlan: MealPlan): Observable<number> {
-      return this.http
-        .put<number>(this.BASE_URL + "/mealPlan", mealPlan)
-        .pipe(catchError(this.handleError<number>("updateMealPlan")));
-    }
-  
-    public deleteMealPlan(mealPlanNumber: number): Observable<number> {
-      return this.http
-        .delete<number>(this.BASE_URL + `/mealPlan/${mealPlanNumber}`)
-        .pipe(catchError(this.handleError<number>("deleteMealPlan")));
-    }
+  public updateMealPlan(mealPlan: MealPlan): Observable<number> {
+    return this.http
+      .put<number>(this.BASE_URL + "/mealPlans", mealPlan)
+      .pipe(catchError(this.handleError<number>("updateMealPlan")));
+  }
 
-    getAllSuppliers(): Observable<Supplier[]> {
-      return this.http
-        .get<Supplier[]>(this.BASE_URL + `/suppliers`)
-        .pipe(catchError(this.handleError<Supplier[]>("getAllSuppliers")));
-    }
+  public deleteMealPlan(mealPlanNumber: number): Observable<number> {
+    return this.http
+      .delete<number>(this.BASE_URL + `/mealPlans/${mealPlanNumber}`)
+      .pipe(catchError(this.handleError<number>("deleteMealPlan")));
+  }
+
+  getAllSuppliers(): Observable<Supplier[]> {
+    return this.http
+      .get<Supplier[]>(this.BASE_URL + `/suppliers`)
+      .pipe(catchError(this.handleError<Supplier[]>("getAllSuppliers")));
+  }
 
   private handleError<T>(
     request: string,

@@ -1,78 +1,43 @@
-<h2 *ngIf="data.add" mat-dialog-title align="center">Résultat de votre insertion</h2>
-<h2 *ngIf="data.update" mat-dialog-title align="center">Résultat de votre modification</h2>
-<h2 *ngIf="data.delete" mat-dialog-title align="center">Résultat de votre suppression</h2>
-
+<h2 *ngIf="!data.update && !data.delete" mat-dialog-title align="center">Résultat de votre insertion</h2>
+<h2 *ngIf="data.update && !data.delete" mat-dialog-title align="center">Résultat de votre modification</h2>
+<h2 *ngIf="!data.update && data.delete" mat-dialog-title align="center">Résultat de votre suppression</h2>
 <div align='center' *ngIf="data.pending">
   <mat-spinner></mat-spinner>
 </div>
-<div *ngIf="!data.add">
+<div *ngIf="!data.update && !data.delete">
   <div *ngIf="!data.pending && !data.success">
-    <p class="no-content" *ngIf="!data.prodInsertError && !data.adaptInsertError">
-      Erreur dans l'insertion d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
-      Il est possible que ce numero de plan soit déjà présente au sein de la BD.
+    <p class="no-content" *ngIf="data.planNumberAlreadyExist">
+      Erreur dans l'insertion d'un nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+      Le numéro de plan repas que vous avez spécifié existe déjà dans la BD.
     </p>
-    <div *ngIf="data.prodInsertError && !data.adaptInsertError">
-      <p class="content">
-        Insertion d'un nouveau plan repas ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
-      </p>
-      <p class="content">
-        Insertion d'un nouveau plan repas ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
-      </p>
-      <p class="no-content">
-        Erreur dans l'insertion d'un nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
-        Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
-      </p>
-    </div>
-    <div *ngIf="!data.prodInsertError && data.adaptInsertError">
-      <p class="content">
-        Insertion d'un nouveau plan repas réussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
-      </p>
-      <p class="no-content">
-        Erreur dans l'insertion d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
-        Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
-      </p>
-    </div>
+    <p class="no-content" *ngIf="data.supplierNumberDoesntExist">
+      Erreur dans l'insertion d'un nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+      Le numéro de fournisseur que vous avez spécifié n'existe pas dans la BD.
+    </p>
   </div>
-
-
-
-  <div *ngIf="data.success">
+  <div *ngIf="!data.pending && data.success">
     <p class="content">
-      Insertions réussies ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
+      Insertion du plan repas réussi ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
     </p>
   </div>
 </div>
 <div *ngIf="data.update && !data.delete">
   <div *ngIf="!data.pending && !data.success">
-    <p class="no-content" *ngIf="!data.prodModError && !data.adaptModError">
-      Erreur dans la modification du plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+    <p class="no-content">
+      Erreur dans la modification d'une nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
       Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
     </p>
-    <div *ngIf="data.prodModError && !data.adaptModError">
-      <p class="content">
-        Modification d'un nouveau plan repas reussie! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
-      </p>
-      <p class="content">
-        Modification d'un nouveau plan repas reussie ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
-      </p>
-      <p class="no-content">
-        Erreur dans la modification d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
-        Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
-      </p>
-    </div>
+  </div>
   <div *ngIf="!data.pending && data.success">
     <p class="content">
       Modifications réussies ! <mat-icon class="no-content-icon">sentiment_satisfied_alt</mat-icon><br/>
     </p>
   </div>
 </div>
-
-
-
-<div *ngIf="data.delete">
+<div *ngIf="!data.update && data.delete">
   <div *ngIf="!data.pending && !data.success">
     <p class="no-content">
-      Erreur dans la suppression d'un nouveau plan repas <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+      Erreur dans la suppression d'un plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
       Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
     </p>
   </div>
@@ -82,8 +47,6 @@
     </p>
   </div>
 </div>
-
-
 <div align="right">
   <button mat-button mat-dialog-close color="primary" onClick="window.location.href=window.location.href">Fermer <mat-icon>clear</mat-icon></button>
 </div>

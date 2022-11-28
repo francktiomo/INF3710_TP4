@@ -30,7 +30,7 @@ export class DeleteMealPlanComponent {
     this.dialog.open(PendingQueryComponent, dialogConfig);
   }
 
-  deleteVariete(): void {
+  deleteMealPlan(): void {
     this.openDialog();
     this.communicationService.deleteMealPlan(this.data.mealPlan.planNumber).subscribe((response: number) => {
       if (response !== -1) {

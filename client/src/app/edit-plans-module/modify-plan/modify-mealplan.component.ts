@@ -9,60 +9,6 @@ import { PendingQueryComponent } from "../pending-query/pending-query.component"
 
 export const MEALPLANS_CATEGORIES: string[] = ["Vegetarien", "Carnivore", "Paleo","Keto"];
 
-export const MEALPLANS_FROM_DB: MealPlan[] =  [{
-  planNumber: 13,
-    category: 'Keto',
-    frequency: 7,
-    numberOfPeople: 24,
-    numberOfCalories: 12,
-    price: 12,
-    supplierNumber: 127,
-},{
-  planNumber: 90,
-    category: 'Herbivore',
-    frequency: 7,
-    numberOfPeople: 24,
-    numberOfCalories: 12,
-    price: 12,
-    supplierNumber: 127,
-},
-{
-  planNumber: 113,
-    category: 'Carnivore',
-    frequency: 8,
-    numberOfPeople: 820,
-    numberOfCalories: 248,
-    price: 34,
-    supplierNumber: 127,
-},
-{
-  planNumber: 29,
-    category: 'Paleo',
-    frequency: 2,
-    numberOfPeople: 529,
-    numberOfCalories: 280,
-    price: 67,
-    supplierNumber: 127,
-}
-];
-
-export const SUPPLIERS_FROM_DB : Supplier[] = [{
-  supplierNumber: 10,
-  supplierName: "Einstein",
-  supplierAddress: "10 rue de Wallace",
-},
-{
-  supplierNumber: 17,
-  supplierName: "Axelrod",
-  supplierAddress: "91 rue de Pinlepas",
-},
-{
-  supplierNumber: 77,
-  supplierName: "Robert",
-  supplierAddress: "354 avenue Illinois",
-}
-];
-
 @Component ({
   selector: 'ModifyMealPlanComponent',
   templateUrl: './modify-mealplan.component.html',
@@ -79,7 +25,6 @@ export class ModifyMealPlanComponent implements OnInit {
   sixthFormGroup: FormGroup;
   seventhFormGroup: FormGroup;
 
-
   planNumber: number;
   category: string;
   frequency: number;
@@ -89,8 +34,8 @@ export class ModifyMealPlanComponent implements OnInit {
   supplierNumber: number;
 
   suppliers: Supplier[];
-  mealPlans: MealPlan[];
-  categories:string[];
+  mealPlans: MealPlan[] = [];
+  categories: string[] = [];
 
   pending: boolean = true;
   success: boolean = false;
@@ -123,46 +68,41 @@ export class ModifyMealPlanComponent implements OnInit {
     });
     this.getAllMealPlans();
     this.getAllSuppliers();
-    this.getAllCategories();
-    setTimeout(() => { this.loadValues() }, 250);
+    
+    setTimeout(() => { this.loadValues(); this.setInputsMaxLength();  }, 325); 
   }
 
-  allFormFieldAreCompleted(): boolean{
-    return (this.planNumber!==null)  
-    && (this.category!==null)
-    && (this.frequency!==null)
-    && (this.numberOfPeople!==null)
-    && (this.numberOfCalories !== null)
-    && (this.price !== null)
-    && (this.supplierNumber!==null);
+  setInputsMaxLength(): void {
+    document.querySelectorAll('input[type="number"]').forEach((input: HTMLInputElement) => {
+      input.oninput = () => {
+        if (input.value.length > input.maxLength)
+          input.value = input.value.slice(0, input.maxLength );
+      }
+    });
   }
 
   getAllMealPlans(): void {
-    this.mealPlans = MEALPLANS_FROM_DB ;
-   // this.communicationService.getAllMealPlans().subscribe((mealPlans: MealPlan[]) => {
-    //   this.mealPlans = mealPlans ? mealPlans : [];
-    // });
- }
+   this.communicationService.getAllMealPlans().subscribe((mealPlans: MealPlan[]) => {
+      this.mealPlans = mealPlans ? mealPlans : [];
+      for (const mealPlan of this.mealPlans) {
+        if (!this.categories.includes(mealPlan.category))
+          this.categories.push(mealPlan.category);
+      }
+    });
+  }
 
  getAllSuppliers(): void {
- this.suppliers = SUPPLIERS_FROM_DB; // comment this line and uncomment line 151- 155
-   // this.communicationService
-   //   .getAllSuppliers()
-   //   .subscribe((suppliers: Supplier[]) => {
-   //     this.suppliers = suppliers ? suppliers : [];
-   //   });
- }
-
- getAllCategories(): void {
-   this.categories = MEALPLANS_CATEGORIES;
-   }
+   this.communicationService
+     .getAllSuppliers()
+     .subscribe((suppliers: Supplier[]) => {
+       this.suppliers = suppliers ? suppliers : [];
+     });
+  }
 
   loadValues(): void {
     if (!this.data || !this.data.mealPlan) return;
-
     for (const mealPlan of this.mealPlans) {
       if (mealPlan.planNumber === this.data.mealPlan.planNumber) {
-
         this.planNumber = this.data.mealPlan.planNumber;
         this.category = this.data.mealPlan.category;
         this.frequency = this.data.mealPlan.frequency;
@@ -198,9 +138,12 @@ export class ModifyMealPlanComponent implements OnInit {
         frequency: this.frequency,
         numberOfPeople: this.numberOfPeople,
         numberOfCalories: this.numberOfCalories,
-    price: this.price,
-    supplierNumber: this.supplierNumber,
-      } as MealPlan)
+        price: this.price,
+        supplierNumber: this.supplierNumber,
+      } as MealPlan).subscribe(async (res: number) => {
+        if (res !== -1)
+          this.success = true;
+      })
 
       setTimeout(() => {
         this.pending = false;
