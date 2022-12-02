@@ -9,19 +9,8 @@
 - Angular web app integrating PostgreSQL.
 
 ## Auteurs / Authors:
-- Charles De Lafontaine
-- Geneviève Pelletier-Mc Duff
-- Thierry Beaulieu
-
-## [FR] Contributions:
-- **Charles De Lafontaine:** créateur de l'application web (front-end + backend), créateur du schéma de la base de données
-- **Geneviève Pelletier-Mc Duff:** codage par les pairs, revue du code, du schéma et de la population de la BD
-- **Thierry Beaulieu:** revue du schéma et de la population de la BD
-
-## [EN] Contributions:
-- **Charles De Lafontaine:** creator of the web application (front-end + backend), creator of the database schema
-- **Geneviève Pelletier-Mc Duff:** peer coding, review of the code, schema, and DB population
-- **Thierry Beaulieu:** review of the schema, and DB population
+- Franck Tiomo
+- Ewald Djangui
 
 ## [FR] Pour utiliser l'application...
 - Assurez-vous d'avoir installé PostgreSQL (la version ~8.2 est utilisée pour ce projet).
@@ -40,3 +29,5 @@
 - Go to `/server/app/services/database.service.ts`, and modify `connectionConfig` with your database settings.
 - Go to `/server` and type `npm start` in a terminal. Server is active on `localhost:3000` by default.
 - Go to `/client` and type `npm start` in a terminal. Client is active on `localhost:4200` by default.
+
+Cette application s'est fortement inspirée de celle qui se trouve sur ce lien : https://github.com/DaddyChucky/POSTGRESQL_INTEGRATION

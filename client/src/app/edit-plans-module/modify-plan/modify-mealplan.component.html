@@ -1,4 +1,4 @@
-<h2 mat-dialog-title align="center">Modifier le plan repas #{{data.mealPlan.planNumber}}</h2>
+<h2 mat-dialog-title align="center">Modifier le plan repas numéro {{this.data.mealPlan.planNumber}}</h2>
 <mat-divider></mat-divider>
 <br />
 
@@ -14,6 +14,8 @@
             type="number" min="1" max="2147483647" maxlength="10"
             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
             matInput formControlName="firstCtrl"
+            value="{{planNumber}}"
+            placeholder="Ex: 3"
             readonly required>
         </mat-form-field>
         <div>
@@ -50,7 +52,7 @@
             [(ngModel)]="frequency"
             type="number" min="0" max="32767" maxlength="5"
             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-            matInput formControlName="thirdCtrl" required>
+            matInput formControlName="thirdCtrl" placeholder="Ex: 4" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Étape précédente</button>
@@ -69,7 +71,7 @@
             [(ngModel)]="numberOfPeople"
             type="number" min="1" max="32767" maxlength="5"
             onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-            matInput formControlName="fourthCtrl" required>
+            matInput formControlName="fourthCtrl" placeholder="Ex: 5" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Étape précédente</button>
@@ -86,7 +88,7 @@
           <input 
             [(ngModel)]="numberOfCalories"
             type="number" min="0" max="32767" maxlength="5"
-            matInput formControlName="fifthCtrl" required>
+            matInput formControlName="fifthCtrl" placeholder="Ex: 3000" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Étape précédente</button>
@@ -100,7 +102,8 @@
         <ng-template matStepLabel>Entrez le prix</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>Prix</mat-label>
-          <input [(ngModel)]="price" type="number" min="0" maxlength="7" matInput formControlName="sixthCtrl" required>
+          <input [(ngModel)]="price" type="number" min="0" max="9999.99" maxlength="7" matInput formControlName="sixthCtrl" placeholder="Ex: 23.50" required>
+          <mat-hint align="start">Max: $9999.99</mat-hint>
         </mat-form-field>
         <div>
         <button mat-button matStepperPrevious>Étape précédente</button>
@@ -116,7 +119,7 @@
           <mat-label>Numéro du fournisseur</mat-label>
           <mat-select [(value)]="supplierNumber" formControlName="seventhCtrl">
             <mat-option *ngFor="let supplier of this.suppliers" [value]="supplier.supplierNumber">
-              {{ supplier.supplierNumber }}: {{ supplier.supplierName }}
+              {{ supplier.supplierNumber }}: {{ supplier.supplierName ? supplier.supplierName : "Fournisseur sans nom"  }} 
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -136,13 +139,13 @@
         <mat-card-content>
           <ul>
             <li *ngIf="category">
-              Categorie: {{ category }}
+              Catégorie: {{ category }}
             </li>
               <li *ngIf="!category" ngClass="to-be-defined">
                 Categorie: à définir
               </li>
             <li *ngIf="frequency">
-              Frequence: {{ frequency }}
+              Fréquence: {{ frequency }}
             </li>
               <li *ngIf="!frequency" ngClass="to-be-defined">
                 Frequence: à définir

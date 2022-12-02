@@ -7,7 +7,7 @@ import { Supplier } from "../../../../common/tables/Supplier";
 
 @Injectable()
 export class CommunicationService {
-  private readonly BASE_URL: string = "http://localhost:8000/database";
+  private readonly BASE_URL: string = "http://localhost:3000/database";
   public constructor(private readonly http: HttpClient) {}
 
   private _listeners: any = new Subject<any>();
@@ -20,7 +20,7 @@ export class CommunicationService {
     this._listeners.next(filterBy);
   }
 
-  getAllMealPlans(): Observable<MealPlan[]> {
+  public getAllMealPlans(): Observable<MealPlan[]> {
     return this.http
       .get<MealPlan[]>(this.BASE_URL + "/mealPlans")
       .pipe(catchError(this.handleError<MealPlan[]>("getAllMealPlans")));
@@ -44,9 +44,9 @@ export class CommunicationService {
       .pipe(catchError(this.handleError<number>("deleteMealPlan")));
   }
 
-  getAllSuppliers(): Observable<Supplier[]> {
+  public getAllSuppliers(): Observable<Supplier[]> {
     return this.http
-      .get<Supplier[]>(this.BASE_URL + `/suppliers`)
+      .get<Supplier[]>(this.BASE_URL + "/suppliers")
       .pipe(catchError(this.handleError<Supplier[]>("getAllSuppliers")));
   }
 

@@ -83,7 +83,7 @@ export class DatabaseService {
     return res;
   }
 
-  // SUPPLIERS
+  // ======= MEAL PLANS =======
   async getAllSuppliers(): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
     const queryText: string = 'SELECT * FROM ToutFrais.Fournisseur';

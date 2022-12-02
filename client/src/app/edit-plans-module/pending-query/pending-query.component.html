@@ -6,6 +6,10 @@
 </div>
 <div *ngIf="!data.update && !data.delete">
   <div *ngIf="!data.pending && !data.success">
+    <p class="no-content" *ngIf="data.constraintViolation">
+      Erreur dans l'insertion d'un nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
+      Veuillez rééessayer en vous assurant que la valeur du numéro du plan est inférieure à 2 147 483 647 et que vos autres valeurs numériques sont inférieures à 32 767. 
+    </p>
     <p class="no-content" *ngIf="data.planNumberAlreadyExist">
       Erreur dans l'insertion d'un nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
       Le numéro de plan repas que vous avez spécifié existe déjà dans la BD.
@@ -23,9 +27,9 @@
 </div>
 <div *ngIf="data.update && !data.delete">
   <div *ngIf="!data.pending && !data.success">
-    <p class="no-content">
+    <p class="no-content" *ngIf="data.constraintViolation">
       Erreur dans la modification d'une nouveau plan repas. <mat-icon class="no-content-icon">sentiment_very_dissatisfied</mat-icon><br/>
-      Il est possible qu'il y ait eu un souci avec le référencement des clefs primaires.
+      Veuillez vérifier que les valeurs numériques que vous avez entrées sont inférieures à 32 767.
     </p>
   </div>
   <div *ngIf="!data.pending && data.success">
@@ -50,4 +54,3 @@
 <div align="right">
   <button mat-button mat-dialog-close color="primary" onClick="window.location.href=window.location.href">Fermer <mat-icon>clear</mat-icon></button>
 </div>
-

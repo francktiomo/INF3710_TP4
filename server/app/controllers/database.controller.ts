@@ -31,6 +31,7 @@ export class DatabaseController {
         res.json(mealPlans);
       })
       .catch((e: Error) => {
+        res.json(-1);
         console.error(e.stack);
       });
     });
@@ -78,7 +79,7 @@ export class DatabaseController {
           })
           .catch((e: Error) => {
             console.error(e.stack);
-            res.json(e);
+            res.json(-1);
           });
       }
     );
@@ -110,6 +111,7 @@ export class DatabaseController {
         res.json(suppliers);
       })
       .catch((e: Error) => {
+        res.json(-1);
         console.error(e.stack);
       });
     });

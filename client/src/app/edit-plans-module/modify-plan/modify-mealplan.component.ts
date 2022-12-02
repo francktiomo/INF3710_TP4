@@ -7,7 +7,9 @@ import { Supplier } from "../../../../../common/tables/Supplier";
 import { MealPlan } from "../../../../../common/tables/MealPlan";
 import { PendingQueryComponent } from "../pending-query/pending-query.component";
 
-export const MEALPLANS_CATEGORIES: string[] = ["Vegetarien", "Carnivore", "Paleo","Keto"];
+const SMALLINT_MAX = 32767;
+const INT_MAX = 2147483647;
+const DEFAULT_CATEGORIES = ["Chinois", "Mexicain", "Barbecue/grill"];
 
 @Component ({
   selector: 'ModifyMealPlanComponent',
@@ -32,14 +34,14 @@ export class ModifyMealPlanComponent implements OnInit {
   numberOfCalories: number;
   price: number;
   supplierNumber: number;
+  constraintViolation: boolean = false;
 
   suppliers: Supplier[];
   mealPlans: MealPlan[] = [];
-  categories: string[] = [];
-
+  categories: string[] = DEFAULT_CATEGORIES;
+  
   pending: boolean = true;
   success: boolean = false;
-  //have attributes for the errors
 
 
   constructor(public dialog: MatDialog, private _formBuilder: FormBuilder, public dialogRef: MatDialogRef<ModifyMealPlanComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private readonly communicationService: CommunicationService) {}
@@ -69,14 +71,14 @@ export class ModifyMealPlanComponent implements OnInit {
     this.getAllMealPlans();
     this.getAllSuppliers();
     
-    setTimeout(() => { this.loadValues(); this.setInputsMaxLength();  }, 325); 
+    setTimeout(() => { this.loadValues(); this.setInputsMaxLength();  }, 250); 
   }
 
   setInputsMaxLength(): void {
     document.querySelectorAll('input[type="number"]').forEach((input: HTMLInputElement) => {
       input.oninput = () => {
         if (input.value.length > input.maxLength)
-          input.value = input.value.slice(0, input.maxLength );
+          input.value = input.value.slice(0, input.maxLength);
       }
     });
   }
@@ -123,6 +125,7 @@ export class ModifyMealPlanComponent implements OnInit {
       pending: this.pending,
       success: this.success,
       update: true,
+      constraintViolation: this.constraintViolation
     };
     this.dialog.closeAll();
     this.dialog.open(PendingQueryComponent, dialogConfig);
@@ -130,26 +133,39 @@ export class ModifyMealPlanComponent implements OnInit {
 
   modifyMealPlan(): void {
     this.openPendingDialog();
-    // look if there is not a meal plan with the same number
-    this.communicationService
-      .updateMealPlan({
-        planNumber: this.planNumber,
-        category: this.category,
-        frequency: this.frequency,
-        numberOfPeople: this.numberOfPeople,
-        numberOfCalories: this.numberOfCalories,
-        price: this.price,
-        supplierNumber: this.supplierNumber,
-      } as MealPlan).subscribe(async (res: number) => {
-        if (res !== -1)
-          this.success = true;
-      })
 
-      setTimeout(() => {
-        this.pending = false;
-        this.openPendingDialog();
-      }, 500);
+    if (this.checkConstraints()) {
+      this.communicationService
+        .updateMealPlan({
+          planNumber: this.planNumber,
+          category: this.category,
+          frequency: this.frequency,
+          numberOfPeople: this.numberOfPeople,
+          numberOfCalories: this.numberOfCalories,
+          price: this.price,
+          supplierNumber: this.supplierNumber,
+        } as MealPlan).subscribe((result: number | any) => {
+          if (result !== -1)
+            this.success = true;
+        })
+    } else this.constraintViolation = true;
+
+    setTimeout(() => {
+      this.pending = false;
+      this.openPendingDialog();
+    }, 500);
       
+  }
+
+  checkConstraints(): boolean {
+    return (
+      this.planNumber <= INT_MAX &&
+      this.frequency <= SMALLINT_MAX &&
+      this.numberOfPeople <= SMALLINT_MAX &&
+      this.numberOfCalories <= SMALLINT_MAX &&
+      this.price <= 9999.99 &&
+      this.supplierNumber <= INT_MAX
+    );
   }
 
 }

@@ -15,7 +15,7 @@ import { MatTable } from '@angular/material/table';
 export class EditMealPlanComponent implements OnInit {
 
   mealPlans: MealPlan[];
-  displayedColumns: string[] = ['numeroPlan', 'categorie', 'frequence', 'nbPersonnes', 'nbCalories', 'prix', 'numeroFournisseur', 'actions'];
+  displayedColumns: string[] = ['planNumber', 'category', 'frequency', 'numberOfPeople', 'numberOfCalories', 'price', 'supplierNumber', 'actions'];
   @ViewChild(MatTable) table: MatTable<any>;
   
   constructor(public dialog: MatDialog, 
@@ -62,6 +62,8 @@ export class EditMealPlanComponent implements OnInit {
   private getAllMealPlans(): void {
     this.communicationService.getAllMealPlans().subscribe((mealPlans: MealPlan[]) => {
       this.mealPlans = mealPlans ? mealPlans : [];
+      this.mealPlans = this.mealPlans.sort((p1, p2) => (p1.planNumber > p2.planNumber) ? 1 : (p1.planNumber < p2.planNumber) ? -1 : 0);
     });
   }
+
 }
