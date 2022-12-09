@@ -1,5 +1,5 @@
 .title {
-  color: rgb(238, 115, 0);
+  color: rgba(154, 117, 240, 1);
   font-family: 'Roboto', sans-serif;
   margin-left: 10px;
   font-weight: bold;
@@ -33,7 +33,6 @@ p{
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
   padding: 10px;
-  background:brown;
 }
 
 .main-nav {

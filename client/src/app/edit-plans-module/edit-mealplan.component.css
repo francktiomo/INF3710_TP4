@@ -29,11 +29,11 @@ table {
 }
 
 .circle-outline {
-  background: #ddd4bb;
+  background: #f2edfd;
 }
 
 .circle-inline {
-  color: #e40d0d;
+  color: #9A75F0;
 }
 
 h1 {
@@ -42,7 +42,7 @@ h1 {
   padding-top: 2%;
   padding-bottom: 1%;
   text-align: center;
-  color: brown;
+  color: #9a75f0;
   font-weight: bold;
   text-shadow: 1px 1px #000;
 }
